@@ -53,7 +53,7 @@ computerSelection=getComputerChoice();
                     }
                     else{
                         alert("You did not enter Paper, Rock, or Scissors");
-                    
+                    //not sure how to break out of loop callback//
                     }
                     }
 let user=0;
