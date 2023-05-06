@@ -1,4 +1,36 @@
 
+document.body.style="min-height:100vh; display:flex; flex-wrap:wrap; justify-content: center; align-content:center; flex-direction:column";
+const buttons=document.createElement('div');
+document.body.appendChild(buttons);
+buttons.style='width:1000px; display:flex; flex-wrap:wrap; flex:1; align-content:center; justify-content:space-evenly;';
+
+const selectOne=document.createElement('button');
+buttons.appendChild(selectOne);
+selectOne.style="width:100px; height:50px";
+selectOne.textContent="Paper";
+selectOne.addEventListener('click', (e)=>playRound('paper'));
+
+const selectTwo=document.createElement('button');
+buttons.appendChild(selectTwo);
+selectTwo.style="width:100px; height:50px";
+selectTwo.textContent="Rock";
+selectTwo.addEventListener('click', (e)=>playRound('rock'));
+
+const selectThree=document.createElement('button');
+buttons.appendChild(selectThree);
+selectThree.style="width:100px; height:50px";
+selectThree.textContent="Scissors";
+selectThree.addEventListener('click', (e)=>playRound('scissors') );
+
+const display=document.createElement('div');
+document.body.appendChild(display);
+display.style="display:flex; flex-wrap:wrap; flex-direction: column; align-items: center; border:solid black; text-align:center; flex:1; justify-content:space-evenly;";
+
+const resultText=document.createElement('p');
+display.appendChild(resultText);
+resultText.style="font-size:40px"
+resultText.textContent="Choose your Weapon";
+
 
 function getComputerChoice(){
 num=Math.floor(Math.random()*3);
@@ -10,67 +42,84 @@ else if(num===1){
 }
 else{
     return "Scissors"
-}
-}
-function game(){
-     for(let i=0; i<5; i++){
-      playRound(i);
-     if(i===4){
-        keepScore();
-     }
-     }
-    }
+}}
+
 function playRound(playerSelection, computerSelection){
-playerSelection=prompt("Enter Paper, Rock, or Scissors");
-let playerSelection2=playerSelection.toLowerCase();
 computerSelection=getComputerChoice();
- if(playerSelection2==="paper" && computerSelection==="Paper"){
-                       alert("Its a tie!  Paper is equal to Paper");
+if(playerSelection==="paper" && computerSelection==="Paper"){
+              resultText.textContent="Its a tie!  Paper is equal to Paper"
                     }
-                    else if(playerSelection2==="paper" && computerSelection==="Rock"){
-                        alert("You win! Paper beats Rock "), user++;
-                        } 
-                    else if(playerSelection2==="paper" && computerSelection==="Scissors"){
-                        alert("You lose! Scissors beats Paper"), computer++;  
+                    else if(playerSelection==="paper" && computerSelection==="Rock"){
+                       resultText.textContent= "You win! Paper beats Rock ";
+                        user++; getScore();
+                        }
+                    else if(playerSelection==="paper" && computerSelection==="Scissors"){
+                         resultText.textContent="You lose! Scissors beats Paper";
+                        computer++; getScore();
+                        }
+                     else if(playerSelection==="rock" && computerSelection==="Rock"){
+                      resultText.textContent="Its a tie! Rock is equal to Rock"; 
                      }
-                     else if(playerSelection2==="rock" && computerSelection==="Rock"){
-                        alert("Its a tie! Rock is equal to Rock"); 
+                     else if(playerSelection==="rock" && computerSelection==="Paper"){
+                        resultText.textContent="You lose!  Paper beats Rock";  
+                       computer++; getScore();
+                        }
+                    else if(playerSelection==="rock" && computerSelection==="Scissors"){
+                        resultText.textContent="You win! Rock beats Scissors"; 
+                        user++; getScore();
+                         }
+                    else if(playerSelection==="scissors" && computerSelection==="Scissors"){
+                        resultText.textContent="Its a tie! Scissors is equal to Scissors";
                     }
-                     else if(playerSelection2==="rock" && computerSelection==="Paper"){
-                        alert("You lose!  Paper beats Rock"), computer++;
-                    }
-                    else if(playerSelection2==="rock" && computerSelection==="Scissors"){
-                        alert("You win! Rock beats Scissors"), user++;
-                    }
-                    else if(playerSelection2==="scissors" && computerSelection==="Scissors"){
-                        alert("Its a tie! Scissors is equal to Scissors");
-                    }
-                    else if(playerSelection2==="scissors" && computerSelection==="Paper"){
-                        alert("You win! Scissors beats Paper"), user++;
-                    }
-                    else if(playerSelection2==="scissors" && computerSelection==="Rock"){
-                        alert("You lose!  Rock beats Scissors"), computer++;
-                    }
-                    else{
-                        alert("You did not enter Paper, Rock, or Scissors");
-                    //not sure how to break out of loop callback//
-                    }
-                    }
+                    else if(playerSelection==="scissors" && computerSelection==="Paper"){
+                         resultText.textContent="You win! Scissors beats Paper"; 
+                        user++; getScore();
+                        }
+                    else if(playerSelection==="scissors" && computerSelection==="Rock"){
+                        resultText.textContent="You lose!  Rock beats Scissors";
+                         computer++; getScore(); 
+                        }
+}
+                    
 let user=0;
 let computer=0;
+const score=document.createElement('h2')
+display.appendChild(score);
+score.textContent=`Player:${user} Computer:${computer}`;
 
-function keepScore(){
-    if(user>computer){
-        alert("Congratulations!  You win!");
+function getScore(){
+score.textContent=`Player:${user} Computer:${computer}`;
+       if(user===5){
+        resultText.textContent="Congratulations!  You win!";
+        restart();
     }
-    else if(user<computer){
-        alert("Computer Wins, better luck next time");
-    }
-    else{
-            alert("its a tie?");
-    }
-}
-                game();           
+    else if(computer===5){
+        resultText.textContent="Computer Wins, better luck next time";
+        restart();
+    }}
+        
+        function restart(){
+        selectOne.disabled=true;
+        selectTwo.disabled=true;
+        selectThree.disabled=true;
+        const restartButton=document.createElement('button');
+        display.appendChild(restartButton);
+        restartButton.style="width:100px; height:50px";
+        restartButton.textContent="Again?";
+        restartButton.addEventListener('click', (e)=>{
+           user=0; computer=0;
+           score.textContent=`Player:${user} Computer:${computer}`;
+           resultText.textContent="Choose your Weapon";
+           display.removeChild(restartButton);
+           selectOne.disabled=false;
+           selectTwo.disabled=false;
+           selectThree.disabled=false;
+         })};
+
+
+
+
+                    
 
                        
                     
